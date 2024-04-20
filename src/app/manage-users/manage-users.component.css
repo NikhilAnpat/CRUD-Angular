@@ -1,0 +1,56 @@
+.form-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.form-box label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-box input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+/* .UserAddButton{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+  } */
+
+/* ___________________________________________________________________________________________ */
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+
+
+
+
+

@@ -1,0 +1,130 @@
+<div class="form-box" [formGroup]="addUserForm">
+    <label for="userregistration">Registration No:</label>
+    <input type="text" id="userregistration" name="userregistration"formControlName="userregistration" appNumericOnly><br>
+    <label style="color: red;" *ngIf="addUserForm.get('userregistration')?.touched  && addUserForm.get('userregistration')?.invalid ">RegistrationNoRequired !</label> <br>
+    <label for="username">Name:</label>
+    <input type="text" id="username" name="username"
+        formControlName="username"><br>
+    <label style="color: red;"
+        *ngIf="addUserForm.get('username')?.touched && addUserForm.get('username')?.invalid">Name
+        Required !</label><br>
+    <label for="useremail">Email:</label>
+    <input type="email" id="useremail" name="useremail"
+        formControlName="useremail"><br>
+    <div *ngIf="addUserForm.get('useremail')?.touched">
+        <div
+            *ngIf="addUserForm.get('useremail')?.hasError('required') && !addUserForm.get('useremail')?.value">
+            <label style="color: red;">Email is required!</label>
+        </div>
+        <div
+            *ngIf="addUserForm.get('useremail')?.hasError('invalidEmailFormat') && addUserForm.get('useremail')?.value">
+            <label style="color: red;">Invalid email format!</label>
+        </div>
+    </div>
+    <br>
+    <label for="usermobile">Mobile No:</label>
+    <input type="tel" id="usermobile" name="usermobile"
+        formControlName="usermobile" appNumericOnly><br>
+    <div *ngIf="addUserForm.get('usermobile')?.touched">
+        <div
+            *ngIf="addUserForm.get('usermobile')?.hasError('required') && !addUserForm.get('usermobile')?.value">
+            <label style="color: red;">MobileNo is required!</label>
+        </div>
+        <div
+            *ngIf="addUserForm.get('usermobile')?.hasError('pattern') && addUserForm.get('usermobile')?.value">
+            <label style="color: red;">Invalid mobile number format!</label>
+        </div>
+        <div *ngIf="addUserForm.get('usermobile')?.hasError('minlength')">
+            <label style="color: red;">Mobile number should be at least 10 digits long!</label>
+        </div>
+        <div *ngIf="addUserForm.get('usermobile')?.hasError('maxlength')">
+            <label style="color: red;">Mobile number should not exceed 10 digits!</label>
+        </div>
+    </div><br>
+    <div style="display: flex; justify-content: center;">
+        <button (click)="addUserData()" [disabled]="!addUserForm.valid">UserAdd</button>
+    </div>
+    <div class="toast-container"></div>
+</div>
+
+<!-- ______________________________________________________ -->
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Registration No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>MobileNo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody [formGroup]="userFormGroup">
+        <ng-container formArrayName="users">
+            <tr *ngFor="let userGroup of users.controls; let i = index">
+                <ng-container [formGroup]="$any(userGroup)">
+                    <td>
+                        {{ userGroup.value.userregistration }}
+                    </td>
+                    <td>
+                        <ng-container *ngIf="!userGroup.value.isEditing">
+                            {{ userGroup.value.username }}
+                        </ng-container>
+                        <ng-container *ngIf="userGroup.value.isEditing">
+                            <input type="text" formControlName="username">
+                            <div *ngIf="userGroup?.get('username')?.invalid && (userGroup?.get('username')?.dirty || userGroup?.get('username')?.touched)" style="color: red;">
+                                <span *ngIf="userGroup?.get('username')?.hasError('required')">username is Required!</span>
+                            </div>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="!userGroup.value.isEditing">
+                            {{ userGroup.value.useremail }}
+                        </ng-container>
+                        <ng-container *ngIf="userGroup.value.isEditing">
+                            <input type="email" formControlName="useremail">
+                            <span *ngIf="userGroup?.get('useremail')?.invalid && (userGroup?.get('useremail')?.dirty || userGroup?.get('useremail')?.touched)" style="color: red;">
+                                <span *ngIf="userGroup?.get('useremail')?.hasError('required')"><br>Email is Required!</span>
+                                <span *ngIf="userGroup?.get('useremail')?.hasError('invalidEmailFormat') && userGroup.get('useremail')?.value"><br>Invalid Email!</span>
+                            </span>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="!userGroup.value.isEditing">
+                            <!-- // custom pipe    | formatMobileNumber -->
+                            {{ userGroup.value.usermobile | phoneNumberPrefix }} 
+                        </ng-container>
+                        <ng-container *ngIf="userGroup.value.isEditing">
+                            <!-- // custom directive   numericOnly-->
+                            <input type="text" formControlName="usermobile" appNumericOnly> 
+                            <span *ngIf="userGroup?.get('usermobile')?.invalid && (userGroup?.get('usermobile')?.dirty || userGroup?.get('usermobile')?.touched)" style="color: red;">
+                                <span *ngIf="userGroup?.get('usermobile')?.hasError('required')"><br>Mobile number is Required!</span>
+                                <span *ngIf="userGroup?.get('usermobile')?.hasError('pattern')" ></span>
+                                <span *ngIf="userGroup?.get('usermobile')?.hasError('minlength') "><br>Mobile number should be at least 10 digits long!</span>
+                                <span *ngIf="userGroup?.get('usermobile')?.hasError('maxlength')"><br>Mobile number should not exceed 10 digits!</span>
+                            </span>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <!-- <button class="btn-danger"
+                            style="background-color: red;"
+                            (click)="deleteUser(userGroup.value.id)">Delete</button> -->
+                            <button class="btn-danger" style="background-color: red;" (click)="openDailog(userGroup.value.id)">
+                                Delete
+                            </button>
+                        <button *ngIf="!userGroup.value.isEditing"
+                            class="btn-success"
+                            (click)="toggleEdit(userGroup, i, true)">Update</button>
+                        <button *ngIf="userGroup.value.isEditing"
+                            class="btn-primary"
+                            (click)="updateData(userGroup.value)" [disabled]="userFormGroup.invalid">Save</button>
+                        <button *ngIf="userGroup.value.isEditing"
+                            class="btn-secondary"
+                            (click)="toggleEdit(userGroup, i, false)">Cancel</button>
+                    </td>
+                </ng-container>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

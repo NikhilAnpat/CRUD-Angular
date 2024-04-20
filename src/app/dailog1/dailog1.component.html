@@ -1,0 +1,8 @@
+<h2 mat-dialog-title class="custom-dialog-title">Are you sure?</h2>
+<mat-dialog-content class="custom-dialog-content">
+  Would you like to delete these data?
+</mat-dialog-content>
+<mat-dialog-actions class="custom-dialog-actions">
+  <button mat-button [mat-dialog-close]="false" class="custom-cancel-button">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="custom-delete-button">Delete</button>
+</mat-dialog-actions>

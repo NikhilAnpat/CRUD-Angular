@@ -1,0 +1,252 @@
+ <!-- <div class="form-box" [formGroup]="userForm">
+  <label for="userregistration">Registration No:</label>
+  <input type="text" id="userregistration" name="userregistration"
+    formControlName="userregistration"><br>
+  <label style="color: red;"
+    *ngIf=" userForm.get('userregistration')?.touched  && userForm.get('userregistration')?.invalid ">RegistrationNo Required !</label> <br>
+  <label for="username">Name:</label>
+  <input type="text" id="username" name="username"
+    formControlName="username"><br>
+  <label style="color: red;"
+    *ngIf=" userForm.get('username')?.touched && userForm.get('username')?.invalid">Name
+    Required !</label><br>
+  <label for="useremail">Email:</label>
+  <input type="email" id="useremail" name="useremail"
+    formControlName="useremail"><br>
+  <div *ngIf="userForm.get('useremail')?.touched">
+    <div
+      *ngIf="userForm.get('useremail')?.hasError('required') && !userForm.get('useremail')?.value">
+      <label style="color: red;">Email is required!</label>
+    </div>
+    <div
+      *ngIf="userForm.get('useremail')?.hasError('invalidEmailFormat') && userForm.get('useremail')?.value">
+      <label style="color: red;">Invalid email format!</label>
+    </div>
+  </div>
+  <br>
+  <label for="usermobile">Mobile No:</label>
+  <input type="tel" id="usermobile" name="usermobile"
+    formControlName="usermobile"><br>
+  <div *ngIf="userForm.get('usermobile')?.touched">
+    <div
+      *ngIf="userForm.get('usermobile')?.hasError('required') && !userForm.get('usermobile')?.value">
+      <label style="color: red;">MobileNo is required!</label>
+    </div>
+    <div
+      *ngIf="userForm.get('usermobile')?.hasError('pattern') && userForm.get('usermobile')?.value">
+      <label style="color: red;">Invalid mobile number format!</label>
+    </div>
+    <div *ngIf="userForm.get('usermobile')?.hasError('minlength')">
+      <label style="color: red;">Mobile number should be at least 10 digits
+        long!</label>
+    </div>
+    <div *ngIf="userForm.get('usermobile')?.hasError('maxlength')">
+      <label style="color: red;">Mobile number should not exceed 10
+        digits!</label>
+    </div>
+  </div><br>
+
+  <div style="display: flex; justify-content: center;">
+
+    <button (click)="addUser()" class [disabled]="!userForm.valid">User
+      Add</button>
+  </div>
+</div>
+
+
+
+
+<div class="search-div">
+  <div>
+    <button (click)="search()" class="btn btn-success"
+      style="border-radius: 7px;">Search</button>
+    <input type="text" [(ngModel)]="searchQuery" (keyup)="search()"
+      style="margin-left: 10px; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+  </div>
+</div>
+
+
+
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Registration No</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>MobileNo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users | search: searchQuery">
+      <td>{{ user.userregistration }}</td>
+      <td>
+        <ng-container *ngIf="!user.isEditing; else editNameField">
+          {{ user.username }}
+        </ng-container>
+        <ng-template #editNameField>
+          <input type="text" [(ngModel)]="user.username">
+        </ng-template>
+      </td>
+      <td>
+        <ng-container *ngIf="!user.isEditing; else editEmailField">
+          {{ user.useremail }}
+        </ng-container>
+        <ng-template #editEmailField>
+          <input type="email" [(ngModel)]="user.useremail">
+        </ng-template>
+      </td>
+      <td>
+        <div>
+          <ng-container *ngIf="!user.isEditing; else editMobileField">
+            {{ user.usermobile }}
+          </ng-container>
+          <ng-template #editMobileField>
+            <input type="tel" [(ngModel)]="user.usermobile">
+          </ng-template>
+        </div>
+      </td>
+      <td>
+        <button class="btn-danger" style="background-color: red;"
+          (click)="user.id && deleteUser(user.id)">Delete</button>
+        <button *ngIf="!user.isEditing" class="btn-success"
+          (click)="toggleEdit(user)">Update</button>
+        <button *ngIf="user.isEditing" class="btn-primary"
+          (click)="updateData(user)">Save</button>
+        <button *ngIf="user.isEditing" class="btn-secondary"
+          (click)="toggleEdit(user)">Cancel</button>
+      </td>
+    </tr>
+  </tbody>
+</table> -->
+
+<div class="form-box" [formGroup]="userForm">
+  <label for="userregistration">Registration No:</label>
+  <input type="text" id="userregistration" name="userregistration"
+    formControlName="userregistration"><br>
+  <label style="color: red;"
+    *ngIf=" userForm.get('userregistration')?.touched  && userForm.get('userregistration')?.invalid ">RegistrationNo
+    Required !</label> <br>
+  <label for="username">Name:</label>
+  <input type="text" id="username" name="username"
+    formControlName="username"><br>
+  <label style="color: red;"
+    *ngIf=" userForm.get('username')?.touched && userForm.get('username')?.invalid">Name
+    Required !</label><br>
+  <label for="useremail">Email:</label>
+  <input type="email" id="useremail" name="useremail"
+    formControlName="useremail"><br>
+  <div *ngIf="userForm.get('useremail')?.touched">
+    <div
+      *ngIf="userForm.get('useremail')?.hasError('required') && !userForm.get('useremail')?.value">
+      <label style="color: red;">Email is required!</label>
+    </div>
+    <div
+      *ngIf="userForm.get('useremail')?.hasError('invalidEmailFormat') && userForm.get('useremail')?.value">
+      <label style="color: red;">Invalid email format!</label>
+    </div>
+  </div>
+  <br>
+  <label for="usermobile">Mobile No:</label>
+  <input type="tel" id="usermobile" name="usermobile"
+    formControlName="usermobile"><br>
+  <div *ngIf="userForm.get('usermobile')?.touched ">
+    <div *ngIf="userForm.get('usermobile')?.hasError('required') && !userForm.get('usermobile')?.value">
+      <label style="color: red;">MobileNo is required!</label>
+    </div>
+    <div *ngIf="userForm.get('usermobile')?.hasError('pattern') && userForm.get('usermobile')?.value">
+      <label style="color: red;">Invalid mobile number format!</label>
+    </div>
+    <div *ngIf="userForm.get('usermobile')?.hasError('minlength') ">
+      <label style="color: red;">Mobile number should be at least 10 digits
+        long!</label>
+    </div>
+    <div *ngIf="userForm.get('usermobile')?.hasError('maxlength')  ">
+      <label style="color: red;">Mobile number should not exceed 10
+        digits!</label>
+    </div>
+  </div><br>
+
+  <div style="display: flex; justify-content: center;">
+
+    <button (click)="addUser()" class [disabled]="!userForm.valid">User
+      Add</button>
+  </div>
+</div>
+
+<div class="search-div">
+  <div>
+    <button (click)="search()" class="btn btn-success"
+      style="border-radius: 7px;">Search</button>
+    <input type="text" [(ngModel)]="searchQuery" (keyup)="search()"
+      style="margin-left: 10px; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+  </div>
+</div>
+
+
+
+<form [formGroup]="tableForm">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Registration No</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile No</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users | search: searchQuery">
+        <td>{{ user.userregistration }}</td>
+        <td>
+          <ng-container *ngIf="!user.isEditing; else editNameField">
+            {{ user.username }}
+          </ng-container>
+          <ng-template #editNameField>
+            <input type="text" formControlName="username">
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="!user.isEditing; else editEmailField">
+            {{ user.useremail }}
+          </ng-container>
+          <ng-template #editEmailField>
+            <input type="email" formControlName="useremail">
+            <div *ngIf="tableForm.get('useremail')?.invalid && tableForm.get('useremail')?.touched">
+              <div *ngIf="tableForm.get('useremail')?.errors?.['required']"><span style="color: red;">Email is required.</span></div>
+              <div *ngIf="tableForm.get('useremail')?.hasError('invalidEmailFormat') && tableForm.get('useremail')?.value"><span style="color: red;"> Invalid email format.</span></div>
+            </div>
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="!user.isEditing; else editMobileField">
+            {{ user.usermobile }}
+          </ng-container>
+          <ng-template #editMobileField>
+            <input type="tel" formControlName="usermobile">
+            <div *ngIf="tableForm.get('usermobile')?.invalid && tableForm.get('usermobile')?.touched">
+              <div *ngIf="tableForm.get('usermobile')?.errors?.['required']"><span style="color: red;">Mobile number is required.</span></div>
+              <div *ngIf="tableForm.get('usermobile')?.errors?.['minlength']"><span style="color: red;">Mobile number must be 10 digits long.</span></div>
+              <div *ngIf="tableForm.get('usermobile')?.errors?.['maxlength']"><span style="color: red;">Mobile number should not exceed 10 digits.</span></div>
+              <div *ngIf="tableForm.get('usermobile')?.errors?.['pattern']"><span style="color: red;">Mobile number must contain only digits.</span></div>
+            </div>
+            
+          </ng-template>
+        </td>
+        <td>
+          <button class="btn-danger" style="background-color: red;" (click)="user.id && deleteUser(user.id)">Delete</button>
+          <ng-container *ngIf="!user.isEditing">
+            <button class="btn-success" (click)="toggleEdit(user)">Update</button>
+          </ng-container>
+          <ng-container *ngIf="user.isEditing">
+            <button class="btn-primary" (click)="updateData(user)" [disabled]="!tableForm.valid">Save</button>
+            <button class="btn-secondary" (click)="toggleEdit(user)">Cancel</button>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
